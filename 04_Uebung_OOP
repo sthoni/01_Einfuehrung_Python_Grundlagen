@@ -1,0 +1,263 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Übung: Eigene Klassen in Python schreiben\n",
+    "\n",
+    "In der letzten Stunde haben wir das `Ampel`-Objekt kennengelernt. Heute wollen wir das Wissen vertiefen, indem ihr selbst zu Architekten werdet und eure eigenen **Baupläne (Klassen)** für Objekte erstellt.\n",
+    "\n",
+    "**Ziel:** Ihr lernt, wie man eine Klasse mit einem Konstruktor und eigenen Methoden von Grund auf selbst schreibt.\n",
+    "\n",
+    "---"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. Wiederholung: Der Bauplan einer Klasse\n",
+    "\n",
+    "Erinnern wir uns an die wichtigsten Bestandteile eines Klassen-Bauplans:\n",
+    "\n",
+    "1.  **`class NameDerKlasse:`**: So leiten wir die Definition des Bauplans ein.\n",
+    "2.  **`def __init__(self, parameter1, parameter2):`**: Das ist der **Konstruktor**. Diese spezielle Methode wird immer dann aufgerufen, wenn ein neues Objekt nach diesem Plan erstellt wird. Sie legt die Anfangs-**Attribute** (Eigenschaften) fest.\n",
+    "3.  **`self`**: Das Schlüsselwort `self` ist die Verbindung zum Objekt selbst. Mit `self.attribut = wert` speichern wir eine Eigenschaft direkt im Objekt.\n",
+    "4.  **`def meine_methode(self, ...):`**: Das sind die **Methoden** (Fähigkeiten), die jedes Objekt dieser Klasse besitzt.\n",
+    "\n",
+    "Hier ist das Beispiel der `Hund`-Klasse von vorhin:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Der Bauplan für alle Hunde\n",
+    "class Hund:\n",
+    "    # Der Konstruktor: legt Name und Alter bei der Erstellung fest\n",
+    "    def __init__(self, name, alter):\n",
+    "        self.name = name\n",
+    "        self.alter = alter\n",
+    "        print(f\"Ein neuer Hund namens {self.name} wurde erstellt!\")\n",
+    "        \n",
+    "    # Eine Methode: was der Hund tun kann\n",
+    "    def bellen(self):\n",
+    "        print(f\"{self.name} bellt: Wuff, wuff!\")\n",
+    "\n",
+    "# Wir erstellen ein konkretes Objekt (eine Instanz) nach dem Bauplan\n",
+    "bello = Hund(\"Bello\", 5)\n",
+    "\n",
+    "# Wir rufen eine Methode dieses Objekts auf\n",
+    "bello.bellen()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "--- \n",
+    "## 2. Jetzt bist du dran! Deine eigenen Klassen\n",
+    "\n",
+    "Bearbeite nun die folgenden Aufgaben. Für jede Aufgabe gibt es:\n",
+    "1. Eine **Markdown-Zelle** mit der Aufgabenbeschreibung.\n",
+    "2. Eine **Code-Zelle**, in die du deinen Klassencode schreibst.\n",
+    "3. Eine **Test-Zelle**, die du ausführen kannst, um zu prüfen, ob deine Klasse richtig funktioniert."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Aufgabe 1: Das Auto\n",
+    "\n",
+    "Entwickle eine Klasse `Auto`.\n",
+    "\n",
+    "- Der Konstruktor `__init__` soll die Attribute `marke` und `farbe` entgegennehmen und im Objekt speichern.\n",
+    "- Die Klasse soll eine Methode `hupen()` besitzen, die den Text `\"Tuut, tuut!\"` auf dem Bildschirm ausgibt."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "# Schreibe hier den Code für die Klasse Auto\n",
+    "class Auto:\n",
+    "    # TODO: Definiere den Konstruktor __init__.\n",
+    "    # Er soll die Parameter self, marke und farbe haben.\n",
+    "    # Speichere marke und farbe in den Attributen self.marke und self.farbe.\n",
+    "\n",
+    "    # TODO: Definiere die Methode hupen.\n",
+    "    # Sie soll nur den self-Parameter haben und \"Tuut, tuut!\" ausgeben.\n",
+    "    pass # 'pass' ist nur ein Platzhalter, du kannst ihn löschen\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Test für Aufgabe 1\n",
+    "\n",
+    "Führe die folgende Zelle aus, um deine `Auto`-Klasse zu testen. Wenn alles richtig ist, sollte erst die Automarke und dann `\"Tuut, tuut!\"` ausgegeben werden."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Test-Code (nicht verändern)\n",
+    "try:\n",
+    "    mein_auto = Auto(\"Volkswagen\", \"blau\")\n",
+    "    print(f\"Mein Auto ist ein {mein_auto.marke} in {mein_auto.farbe}.\")\n",
+    "    print(\"Jetzt lasse ich es hupen:\")\n",
+    "    mein_auto.hupen()\n",
+    "except Exception as e:\n",
+    "    print(f\"Ein Fehler ist aufgetreten. Hast du die Klasse und die Methoden richtig benannt? Fehler: {e}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Aufgabe 2: Das Rechteck\n",
+    "\n",
+    "Entwickle eine Klasse `Rechteck`.\n",
+    "\n",
+    "- Der Konstruktor `__init__` soll die Attribute `laenge` und `breite` entgegennehmen und speichern.\n",
+    "- Die Klasse soll eine Methode `get_flaecheninhalt()` besitzen. Diese Methode soll den Flächeninhalt (`Länge * Breite`) berechnen und das Ergebnis mit `return` zurückgeben (nicht mit `print` ausgeben!)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Schreibe hier den Code für die Klasse Rechteck\n",
+    "class Rechteck:\n",
+    "    # TODO: Definiere den Konstruktor __init__ für laenge und breite.\n",
+    "    \n",
+    "    # TODO: Definiere die Methode get_flaecheninhalt.\n",
+    "    # Sie soll laenge * breite berechnen und zurückgeben.\n",
+    "    pass\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Test für Aufgabe 2\n",
+    "\n",
+    "Führe die Zelle aus, um deine `Rechteck`-Klasse zu testen. Es sollte der korrekte Flächeninhalt (50) ausgegeben werden."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Test-Code (nicht verändern)\n",
+    "try:\n",
+    "    r1 = Rechteck(10, 5)\n",
+    "    flaeche = r1.get_flaecheninhalt()\n",
+    "    print(f\"Das Rechteck hat die Länge {r1.laenge} und die Breite {r1.breite}.\")\n",
+    "    print(f\"Der Flächeninhalt beträgt: {flaeche}\")\n",
+    "    if flaeche == 50:\n",
+    "        print(\"Super, das Ergebnis ist korrekt!\")\n",
+    "    else:\n",
+    "        print(f\"Das Ergebnis ist nicht 50. Überprüfe deine Berechnung.\")\n",
+    "except Exception as e:\n",
+    "    print(f\"Ein Fehler ist aufgetreten. Hast du die Klasse und die Methoden richtig benannt? Fehler: {e}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Aufgabe 3: Der Schüler / Die Schülerin\n",
+    "\n",
+    "Entwickle eine Klasse `Schueler`.\n",
+    "\n",
+    "- Der Konstruktor soll die Attribute `name` und `alter` entgegennehmen und speichern.\n",
+    "- Die Klasse soll eine Methode `vorstellen()` besitzen, die einen Satz der Form `\"Hallo, ich bin [Name] und bin [Alter] Jahre alt.\"` ausgibt."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Schreibe hier den Code für die Klasse Schueler\n",
+    "class Schueler:\n",
+    "    # Dein Code hier\n",
+    "    pass\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "#### Test für Aufgabe 3\n",
+    "\n",
+    "Führe die Zelle aus, um deine `Schueler`-Klasse zu testen."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Test-Code (nicht verändern)\n",
+    "try:\n",
+    "    s1 = Schueler(\"Max Mustermann\", 16)\n",
+    "    s1.vorstellen()\n",
+    "    \n",
+    "    s2 = Schueler(\"Erika Musterfrau\", 15)\n",
+    "    s2.vorstellen()\n",
+    "except Exception as e:\n",
+    "    print(f\"Ein Fehler ist aufgetreten. Hast du die Klasse und die Methoden richtig benannt? Fehler: {e}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Super gemacht!\n",
+    "\n",
+    "Du hast heute deine ersten eigenen Baupläne für Objekte geschrieben. Du kannst jetzt Objekte mit unterschiedlichen Eigenschaften und Fähigkeiten erstellen. Das ist die Grundlage für fast jedes größere Softwareprojekt!"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
