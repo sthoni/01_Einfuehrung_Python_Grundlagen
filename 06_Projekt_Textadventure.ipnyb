@@ -1,1 +1,198 @@
-
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Abschlussprojekt: Baue dein eigenes Textadventure!\n",
+    "\n",
+    "Jetzt wird es ernst: Wir bündeln alles, was wir über Klassen, Objekte, Attribute, Methoden und Komposition gelernt haben, und bauen damit ein kleines, interaktives Spiel.\n",
+    "\n",
+    "Ein Textadventure ist ein Spiel, das komplett aus Text besteht. Du beschreibst Räume und Aktionen, und der Spieler bewegt sich durch deine Welt, indem er Befehle wie 'gehe nach norden' eingibt.\n",
+    "\n",
+    "**Ziel:** Du entwirfst die Klassen für eine Spielwelt und schreibst die Spiellogik, um sie zum Leben zu erwecken."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 1. Die Bausteine unserer Welt\n",
+    "\n",
+    "Jede gute Welt braucht Bausteine. In unserem Spiel sind das die **Räume**. Ein Raum hat einen Namen und eine Beschreibung. Das Wichtigste ist aber: Ein Raum kennt seine Nachbarn! Von einem Raum aus kann man z.B. nach Norden in einen anderen Raum gelangen.\n",
+    "\n",
+    "*(Didaktisches Prinzip: Hello, world! / Shift-Enter - Wir starten mit einer fertigen, aber einfachen `Raum`-Klasse, um die Grundidee zu verstehen.)*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Raum:\n",
+    "    def __init__(self, name, beschreibung):\n",
+    "        self.name = name\n",
+    "        self.beschreibung = beschreibung\n",
+    "        # Die Nachbarräume speichern wir in einem Dictionary\n",
+    "        # z.B. {'norden': raum_objekt, 'sueden': anderes_raum_objekt}\n",
+    "        self.nachbarn = {}\n",
+    "\n",
+    "    def set_nachbar(self, richtung, raum):\n",
+    "        self.nachbarn[richtung] = raum\n",
+    "\n",
+    "    def get_nachbar(self, richtung):\n",
+    "        return self.nachbarn.get(richtung, None)\n",
+    "    \n",
+    "    def beschreiben(self):\n",
+    "        print(f\"\\n--- {self.name} ---\")\n",
+    "        print(self.beschreibung)\n",
+    "        print(\"Mögliche Ausgänge: \", list(self.nachbarn.keys()))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 2. Die Welt erschaffen\n",
+    "\n",
+    "Jetzt erstellen wir einige Räume und verbinden sie miteinander zu einer kleinen Welt.\n",
+    "\n",
+    "*(Didaktisches Prinzip: Tweak, twiddle, and frob - Du kannst diese Welt später nach Belieben verändern und erweitern!)*"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# 1. Räume als Objekte erstellen\n",
+    "lichtung = Raum(\"Sonnige Lichtung\", \"Du stehst auf einer Lichtung, umgeben von hohen Bäumen.\")\n",
+    "wald = Raum(\"Dunkler Wald\", \"Die Bäume stehen hier dicht. Es ist unheimlich.\")\n",
+    "hoehle = Raum(\"Feuchte Höhle\", \"Von der Decke tropft Wasser. In der Ecke glitzert etwas.\")\n",
+    "\n",
+    "# 2. Räume miteinander verbinden\n",
+    "lichtung.set_nachbar('norden', wald)\n",
+    "wald.set_nachbar('sueden', lichtung)\n",
+    "wald.set_nachbar('osten', hoehle)\n",
+    "hoehle.set_nachbar('westen', wald)\n",
+    "\n",
+    "# Test\n",
+    "lichtung.beschreiben()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 3. Die Hauptfigur: Der Held\n",
+    "\n",
+    "Was wäre ein Spiel ohne einen Helden? Unser Held braucht eigentlich nur eine wichtige Eigenschaft: Er muss wissen, in welchem `Raum`-Objekt er sich gerade befindet.\n",
+    "\n",
+    "*(Didaktisches Prinzip: Fill in the blanks - Du vervollständigst die `Held`-Klasse.)*\n",
+    "\n",
+    "**Deine Aufgabe:** Vervollständige die `bewegen`-Methode. Sie soll versuchen, den Helden in eine neue Richtung zu bewegen. Wenn es dort einen Nachbarraum gibt, soll der Held seinen Standort aktualisieren. Wenn nicht, soll eine Fehlermeldung ausgegeben werden."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Held:\n",
+    "    def __init__(self, start_raum):\n",
+    "        self.aktueller_raum = start_raum\n",
+    "        \n",
+    "    def bewegen(self, richtung):\n",
+    "        # TODO: Finde den nächsten Raum in die angegebene Richtung\n",
+    "        naechster_raum = self.aktueller_raum.get_nachbar(richtung)\n",
+    "        \n",
+    "        # TODO: Prüfe, ob es diesen Raum gibt\n",
+    "        if naechster_raum: # Wenn der Raum nicht None ist\n",
+    "            # Aktualisiere den Standort des Helden\n",
+    "            self.aktueller_raum = naechster_raum\n",
+    "            print(f\"Du gehst nach {richtung}.\")\n",
+    "        else:\n",
+    "            # Gib eine Fehlermeldung aus\n",
+    "            print(\"Dort geht es nicht weiter!\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 4. Das Spiel zum Leben erwecken: Die Spielschleife\n",
+    "\n",
+    "Jetzt fügen wir alles zusammen! Wir erstellen einen Helden und lassen ihn in einer Schleife auf die Eingaben des Spielers reagieren.\n",
+    "\n",
+    "*(Didaktisches Prinzip: Notebook as an app - Wir machen aus unserem Code ein interaktives Programm.)*\n",
+    "\n",
+    "**Anleitung:** Führe die nächste Zelle aus. Du kannst das Spiel steuern, indem du `norden`, `sueden`, `osten`, `westen` oder `ende` in das Eingabefeld tippst und Enter drückst."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Held im Startraum erstellen\n",
+    "spieler = Held(lichtung)\n",
+    "\n",
+    "print(\"Willkommen beim Textadventure! Gib eine Richtung oder 'ende' ein.\")\n",
+    "\n",
+    "# Die Endlos-Schleife, die das Spiel am Laufen hält\n",
+    "while True:\n",
+    "    # Den aktuellen Raum beschreiben\n",
+    "    spieler.aktueller_raum.beschreiben()\n",
+    "    \n",
+    "    # Auf Spielereingabe warten\n",
+    "    befehl = input(\"> \")\n",
+    "    \n",
+    "    if befehl == 'ende':\n",
+    "        print(\"Bis zum nächsten Mal!\")\n",
+    "        break # Die Schleife beenden\n",
+    "    \n",
+    "    # Den Helden bewegen\n",
+    "    spieler.bewegen(befehl)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Fantastisch! Und jetzt?\n",
+    "\n",
+    "Du hast ein funktionierendes Grundgerüst für ein Spiel! Von hier aus sind deiner Kreativität keine Grenzen gesetzt.\n",
+    "\n",
+    "**Ideen für Erweiterungen:**\n",
+    "- **Eine `Gegenstand`-Klasse:** Räume können Gegenstände enthalten, die der Held aufheben kann.\n",
+    "- **Eine `Monster`-Klasse:** In manchen Räumen lauern Monster, gegen die der Held kämpfen muss.\n",
+    "- **Rätsel:** Ein Raum ist verschlossen und kann nur mit einem bestimmten Gegenstand geöffnet werden."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
